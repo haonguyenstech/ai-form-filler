@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Radix test form</title>
+  <script type="importmap">
+  {
+    "imports": {
+      "react": "https://esm.sh/react@18.3.1",
+      "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
+      "react-dom": "https://esm.sh/react-dom@18.3.1",
+      "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+      "@radix-ui/react-select": "https://esm.sh/@radix-ui/react-select@2.1.2?deps=react@18.3.1,react-dom@18.3.1",
+      "@radix-ui/react-popover": "https://esm.sh/@radix-ui/react-popover@1.1.2?deps=react@18.3.1,react-dom@18.3.1",
+      "react-day-picker": "https://esm.sh/react-day-picker@9.4.4?deps=react@18.3.1,react-dom@18.3.1"
+    }
+  }
+  </script>
+</head>
+<body>
+  <h1>Radix test form</h1>
+  <div id="root"></div>
+
+  <script type="module">
+    import React, { useState } from "react";
+    import { createRoot } from "react-dom/client";
+    import * as Select from "@radix-ui/react-select";
+    import * as Popover from "@radix-ui/react-popover";
+    import { DayPicker } from "react-day-picker";
+
+    const h = React.createElement;
+
+    function GenderSelect() {
+      const [v, setV] = useState("");
+      return h(Select.Root, { value: v, onValueChange: setV },
+        h(Select.Trigger, { id: "gender", "data-slot": "select-trigger", "aria-label": "Gender" },
+          h(Select.Value, { placeholder: "Select gender" })),
+        h(Select.Portal, null,
+          h(Select.Content, null,
+            h(Select.Viewport, null,
+              ["Male", "Female", "Other"].map((o) =>
+                h(Select.Item, { key: o, value: o.toLowerCase(), "data-slot": "select-item" },
+                  h(Select.ItemText, null, o)))))));
+    }
+
+    function BirthDate() {
+      // default month is June 2026 so the test must navigate back to March 2026
+      const [date, setDate] = useState(null);
+      const [open, setOpen] = useState(false);
+      return h(Popover.Root, { open, onOpenChange: setOpen },
+        h(Popover.Trigger, { "data-slot": "popover-trigger", "aria-label": "Birth date" },
+          date
+            ? `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`
+            : "Pick a date"),
+        h(Popover.Portal, null,
+          h(Popover.Content, null,
+            h(DayPicker, {
+              mode: "single",
+              defaultMonth: new Date(2026, 5, 1),
+              selected: date,
+              onSelect: (d) => { setDate(d); setOpen(false); },
+            }))));
+    }
+
+    // Department select whose options are fetched ASYNC the first time it opens
+    function DepartmentSelect() {
+      const [v, setV] = useState("");
+      const [opts, setOpts] = useState([]);
+      const onOpen = (open) => {
+        if (open && opts.length === 0) {
+          setTimeout(() => setOpts(["Cardiology", "Neurology", "Pediatrics", "Radiology"]), 700);
+        }
+      };
+      return h(Select.Root, { value: v, onValueChange: setV, onOpenChange: onOpen },
+        h(Select.Trigger, { id: "dept", "data-slot": "select-trigger", "aria-label": "Department" },
+          h(Select.Value, { placeholder: "Select department" })),
+        h(Select.Portal, null,
+          h(Select.Content, null,
+            h(Select.Viewport, null,
+              opts.map((o) =>
+                h(Select.Item, { key: o, value: o.toLowerCase(), "data-slot": "select-item" },
+                  h(Select.ItemText, null, o)))))));
+    }
+
+    function App() {
+      return h("form", { id: "f" },
+        h("div", null,
+          h("label", { htmlFor: "fullName" }, "Full Name *"),
+          h("input", { id: "fullName", name: "fullName", required: true })),
+        h("div", { style: { marginTop: 12 } },
+          h("label", null, "Gender *"), h(GenderSelect)),
+        h("div", { style: { marginTop: 12 } },
+          h("label", null, "Department *"), h(DepartmentSelect)),
+        h("div", { style: { marginTop: 12 } },
+          h("label", null, "Birth date"), h(BirthDate)));
+    }
+
+    createRoot(document.getElementById("root")).render(h(App));
+    window.__ready = true;
+  </script>
+</body>
+</html>
