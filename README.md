@@ -62,13 +62,57 @@ chọn thư mục đã giải nén ở bước 2 rồi bấm **Select (Chọn)**
 ### Bước 6 — Ghim tiện ích và nhập API key
 
 1. Bấm biểu tượng **mảnh ghép** 🧩 trên thanh công cụ của trình duyệt, bấm **ghim** 📌 cạnh *AI Form Filler* để nó luôn hiện ra.
-2. Lấy API key miễn phí: đăng nhập [openrouter.ai](https://openrouter.ai), vào [openrouter.ai/keys](https://openrouter.ai/keys), bấm **Create Key** và chép key (bắt đầu bằng `sk-or-v1-`).
+2. Lấy API key miễn phí theo [hướng dẫn lấy OpenRouter API key](#-lấy-openrouter-api-key-miễn-phí) bên dưới (khoảng 2 phút). Key bắt đầu bằng `sk-or-v1-`.
 3. Mở một trang bất kỳ có form, bấm vào **bong bóng xanh** ở góc dưới bên phải (hoặc biểu tượng tiện ích), chọn tab **Settings**, dán key vào ô **OpenRouter API Key** rồi bấm **Test connection**. Hiện *Connected* là xong.
 
 > 📌 Key miễn phí cho 50 lượt/ngày với các model `:free` (nạp 10 credits thì lên 1000 lượt/ngày). Hết lượt
 > tiện ích vẫn điền được form bằng dữ liệu tạo sẵn trong máy.
 
 <p align="center"><img src="docs/settings.png" width="640" alt="Settings tab"></p>
+
+### 🔑 Lấy OpenRouter API key (miễn phí)
+
+Tiện ích gọi AI qua [OpenRouter](https://openrouter.ai), một cổng kết nối tới nhiều model AI. Các model có đuôi `:free`
+dùng miễn phí, **không cần nhập thẻ**, chỉ cần một API key.
+
+**1. Tạo tài khoản OpenRouter.** Mở [openrouter.ai](https://openrouter.ai), bấm **Sign in** ở góc trên bên phải và
+đăng nhập bằng Google, GitHub hoặc email. Lần đầu đăng nhập thì tài khoản được tạo luôn.
+
+**2. Mở trang API Keys.** Vào thẳng [openrouter.ai/settings/keys](https://openrouter.ai/settings/keys), hoặc bấm
+avatar ở góc trên bên phải → **Keys**.
+
+**3. Bấm Create API Key (Tạo key).** Ở hộp thoại hiện ra:
+- **Name:** đặt tên tuỳ ý để sau này dễ nhận ra, ví dụ `AI Form Filler`.
+- **Credit limit:** để trống cũng được. Model `:free` không trừ tiền. Nếu sau này bạn nạp credits thì nên đặt giới hạn,
+  phòng khi lộ key.
+
+Bấm **Create**.
+
+**4. Chép key ngay.** Key dạng `sk-or-v1-…` chỉ hiện **một lần duy nhất**. Bấm nút copy và dán vào tiện ích ngay (bước 6 ở trên).
+
+> 📌 Lỡ đóng hộp thoại mà chưa chép thì không xem lại được. Xoá key đó và tạo key mới.
+
+**5. Bật model miễn phí trong Privacy (nếu Test connection báo lỗi privacy).** Mở
+[openrouter.ai/settings/privacy](https://openrouter.ai/settings/privacy) và **bật** các tuỳ chọn cho phép dùng
+model/endpoint miễn phí. Một số nhà cung cấp model miễn phí có thể lưu hoặc dùng prompt để huấn luyện, nên
+OpenRouter tắt sẵn chúng với một số tài khoản. Khi bị chặn, tiện ích báo *"Your OpenRouter privacy settings block
+free models"*.
+
+> 📌 Tiện ích chỉ gửi mô tả của từng field (label, kiểu, các lựa chọn) và một "người" giả, không gửi dữ liệu bạn đã
+> nhập. Chi tiết ở mục [Privacy](#-privacy).
+
+**Giới hạn của key miễn phí**
+
+| Tài khoản | Lượt gọi model `:free` |
+|---|---|
+| Chưa nạp tiền | **50 lượt/ngày**, reset lúc 00:00 UTC (7:00 sáng giờ Việt Nam) |
+| Đã nạp từ 10 credits (~10 USD) trở lên | **1000 lượt/ngày** (model `:free` vẫn không trừ credits) |
+
+Mỗi lần bấm **Analyze & Fill** tốn 1 lượt, thêm 1 lượt nếu trang từ chối vài giá trị và tiện ích gửi lại để sửa.
+Hết lượt thì tiện ích vẫn điền form bằng dữ liệu tạo trong máy và ghi rõ giờ reset.
+
+**Giữ key an toàn:** không dán key lên chat, Git hay tài liệu chung. Key nằm trong bộ nhớ của tiện ích trên máy bạn
+(`chrome.storage`, có đồng bộ nếu bạn bật Chrome Sync). Nghi bị lộ thì vào [openrouter.ai/settings/keys](https://openrouter.ai/settings/keys) xoá key và tạo key mới.
 
 ### Xong — cách dùng
 

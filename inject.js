@@ -461,7 +461,7 @@
              <div class="row">
                <label for="apiKey">OpenRouter API Key</label>
                <input type="password" id="apiKey" class="field" placeholder="sk-or-v1-..." />
-               <div class="hint">Free key at <a href="https://openrouter.ai/keys" target="_blank">openrouter.ai/keys</a></div>
+               <div class="hint">Free key at <a href="https://openrouter.ai/settings/keys" target="_blank">openrouter.ai/settings/keys</a> · <a href="https://github.com/haonguyenstech/ai-form-filler#-lấy-openrouter-api-key-miễn-phí" target="_blank">step-by-step guide</a></div>
              </div>
              <div class="row">
                <label for="model">Model (free)</label>

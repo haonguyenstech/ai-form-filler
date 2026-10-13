@@ -76,6 +76,10 @@ function apiError(res, body) {
   if (res.status === 429) return new Error("This model is busy upstream — try again shortly or pick another model.");
   if (res.status === 401) return new Error("Invalid or expired API key.");
   if (res.status === 403) return new Error(msg || "Invalid or expired API key.");
+  // free endpoints are off in the account's privacy settings: a new account's first
+  // free-model call often lands here, and "model not found" sent people the wrong way
+  if (/data policy|privacy/i.test(msg))
+    return new Error("Your OpenRouter privacy settings block free models. Turn them on at openrouter.ai/settings/privacy, then try again.");
   if (res.status === 404) return new Error("Model not found — check the model id.");
   return new Error(`API ${res.status}: ${(msg || body).slice(0, 200)}`);
 }

@@ -23,8 +23,10 @@ const res = (status, body, reset) => new Response(body, { status, headers: reset
 const daily = ctx.apiError(res(429, JSON.stringify({ error: { message: "Rate limit exceeded: free-models-per-day. Add 10 credits" } }), 1791936000000), JSON.stringify({ error: { message: "Rate limit exceeded: free-models-per-day. Add 10 credits" } })).message;
 const busy = ctx.apiError(res(429, "{}"), JSON.stringify({ error: { message: "x is temporarily rate-limited upstream" } })).message;
 const harness = ctx.apiError(res(403, "{}"), JSON.stringify({ error: { message: "inkling:free is only available on agentic harnesses" } })).message;
+const policy = ctx.apiError(res(404, "{}"), JSON.stringify({ error: { message: "No endpoints found matching your data policy (Free model publication). Configure: https://openrouter.ai/settings/privacy" } })).message;
+console.log("data policy:", policy);
 console.log("daily:", daily, "\nbusy:", busy, "\n403:", harness);
-const errOk = /Daily free-model limit/.test(daily) && /Resets at/.test(daily) && /busy upstream/.test(busy) && /agentic harnesses/.test(harness);
+const errOk = /settings\/privacy/.test(policy) && /Daily free-model limit/.test(daily) && /Resets at/.test(daily) && /busy upstream/.test(busy) && /agentic harnesses/.test(harness);
 
 // constraints, locale and persona reach the model; a correction round carries
 // the rejected value and the page's message
