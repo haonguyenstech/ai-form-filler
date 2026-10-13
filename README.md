@@ -75,28 +75,43 @@ chọn thư mục đã giải nén ở bước 2 rồi bấm **Select (Chọn)**
 Tiện ích gọi AI qua [OpenRouter](https://openrouter.ai), một cổng kết nối tới nhiều model AI. Các model có đuôi `:free`
 dùng miễn phí, **không cần nhập thẻ**, chỉ cần một API key.
 
-**1. Tạo tài khoản OpenRouter.** Mở [openrouter.ai](https://openrouter.ai), bấm **Sign in** ở góc trên bên phải và
-đăng nhập bằng Google, GitHub hoặc email. Lần đầu đăng nhập thì tài khoản được tạo luôn.
+**1. Tạo tài khoản OpenRouter.** Mở [openrouter.ai](https://openrouter.ai), bấm **Sign Up** ở góc trên bên phải.
+Cách nhanh nhất là bấm biểu tượng **GitHub** hoặc **Google**, hoặc điền email và mật khẩu rồi bấm **Continue**.
+Đã có tài khoản thì bấm **Sign in** ở cuối hộp thoại.
 
-**2. Mở trang API Keys.** Vào thẳng [openrouter.ai/settings/keys](https://openrouter.ai/settings/keys), hoặc bấm
-avatar ở góc trên bên phải → **Keys**.
+<p align="center"><img src="docs/openrouter/1-sign-up.png" width="49%" alt="Bấm Sign Up"> <img src="docs/openrouter/2-sign-up-dialog.png" width="49%" alt="Đăng nhập bằng GitHub, Google hoặc email"></p>
 
-**3. Bấm Create API Key (Tạo key).** Ở hộp thoại hiện ra:
-- **Name:** đặt tên tuỳ ý để sau này dễ nhận ra, ví dụ `AI Form Filler`.
-- **Credit limit:** để trống cũng được. Model `:free` không trừ tiền. Nếu sau này bạn nạp credits thì nên đặt giới hạn,
-  phòng khi lộ key.
+**2. Mở trang API Keys.** Vào thẳng [openrouter.ai/settings/keys](https://openrouter.ai/settings/keys), hoặc chọn
+**API Keys** ở cột bên trái. Bấm nút **New Key** ở góc trên bên phải.
 
-Bấm **Create**.
+<p align="center"><img src="docs/openrouter/3-api-keys.png" width="80%" alt="Trang API Keys, bấm New Key"></p>
 
-**4. Chép key ngay.** Key dạng `sk-or-v1-…` chỉ hiện **một lần duy nhất**. Bấm nút copy và dán vào tiện ích ngay (bước 6 ở trên).
+**3. Điền thông tin key rồi bấm Create.**
+- **Name:** đặt tên tuỳ ý, ví dụ `AI Form Filler`.
+- **Expiration:** chọn **No expiration** để key không tự hết hạn. Muốn an toàn hơn thì chọn 90 days hoặc 1 year, nhưng nhớ tạo key mới khi key cũ hết hạn.
+- **Credit limit:** chọn **No limit**. Model `:free` không trừ tiền nên không cần giới hạn. Nếu sau này nạp credits thì nên chọn **Custom amount** và đặt mức nhỏ, phòng khi lộ key.
 
-> 📌 Lỡ đóng hộp thoại mà chưa chép thì không xem lại được. Xoá key đó và tạo key mới.
+Khung cảnh báo màu vàng *"This key never expires and has no credit limit…"* là bình thường, cứ bấm **Create**.
 
-**5. Bật model miễn phí trong Privacy (nếu Test connection báo lỗi privacy).** Mở
-[openrouter.ai/settings/privacy](https://openrouter.ai/settings/privacy) và **bật** các tuỳ chọn cho phép dùng
-model/endpoint miễn phí. Một số nhà cung cấp model miễn phí có thể lưu hoặc dùng prompt để huấn luyện, nên
-OpenRouter tắt sẵn chúng với một số tài khoản. Khi bị chặn, tiện ích báo *"Your OpenRouter privacy settings block
-free models"*.
+<p align="center"><img src="docs/openrouter/4-create-key.png" width="80%" alt="Hộp thoại Create API Key"></p>
+
+**4. Nhập mã xác minh email.** OpenRouter gửi một mã 6 số về email của tài khoản. Mở email, nhập mã rồi bấm
+**Continue**. Không thấy email thì kiểm tra thư mục Spam, hoặc chờ hết đếm ngược rồi bấm **Resend**.
+
+<p align="center"><img src="docs/openrouter/5-verify-email.png" width="80%" alt="Nhập mã xác minh gửi về email"></p>
+
+**5. Chép key ngay.** Key dạng `sk-or-v1-…` chỉ hiện **một lần duy nhất**. Bấm nút copy và dán vào tiện ích ngay
+(bước 6 ở trên: bong bóng → **Settings** → **OpenRouter API Key** → **Test connection**).
+
+> 📌 Lỡ đóng hộp thoại mà chưa chép thì không xem lại được. Xoá key đó (nút ⋮ cuối dòng) và tạo key mới.
+
+**6. Bật model miễn phí trong Privacy (nếu Test connection báo lỗi privacy).** Mở
+[openrouter.ai/settings/privacy](https://openrouter.ai/settings/privacy), kéo xuống mục **Data Training** và **bật**
+**Allow free endpoints that train on request data**. Đa số nhà cung cấp model miễn phí có quyền lưu hoặc dùng prompt
+để huấn luyện. Khi tuỳ chọn này tắt, OpenRouter không cho gọi họ và tiện ích báo *"Your OpenRouter privacy settings
+block free models"*. Cũng kiểm tra mục **Zero Data Retention** ở đầu trang: dòng *All other models* phải đang **tắt**.
+
+<p align="center"><img src="docs/openrouter/6-privacy.png" width="80%" alt="Privacy: bật Allow free endpoints that train on request data"></p>
 
 > 📌 Tiện ích chỉ gửi mô tả của từng field (label, kiểu, các lựa chọn) và một "người" giả, không gửi dữ liệu bạn đã
 > nhập. Chi tiết ở mục [Privacy](#-privacy).
