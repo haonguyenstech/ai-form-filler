@@ -26,6 +26,8 @@ Mở trang [Releases](https://github.com/haonguyenstech/ai-form-filler/releases/
 
 > Đừng bấm *Source code (zip)* — đó là mã nguồn kèm bộ test, không phải bản cài.
 
+<p align="center"><img src="docs/install/1-release.png" width="80%" alt="Trang Releases: bấm file ai-form-filler-x.y.z.zip, không phải Source code"></p>
+
 ### Bước 2 — Giải nén ra một thư mục và để yên ở đó
 
 - **Trên Mac:** bấm đúp vào file .zip, máy sẽ tạo một thư mục cùng tên.
@@ -52,12 +54,24 @@ Chép địa chỉ bên dưới, bấm vào thanh địa chỉ của trình duy�
 
 > 📌 Chế độ này chỉ cho phép cài tiện ích từ một thư mục trên máy, không làm thay đổi gì khác.
 
+| Chrome — công tắc ở góc trên bên phải | Edge — công tắc ở cuối cột bên trái |
+|---|---|
+| <img src="docs/install/4-chrome-devmode.png" alt="Chrome: bật Developer mode"> | <img src="docs/install/4-edge-devmode.png" alt="Edge: bật Developer mode"> |
+
 ### Bước 5 — Bấm Load unpacked và chọn thư mục đã giải nén
 
 Sau khi bật Developer mode, phía trên trang hiện thêm vài nút. Bấm **Load unpacked (Tải tiện ích đã giải nén)**,
 chọn thư mục đã giải nén ở bước 2 rồi bấm **Select (Chọn)**.
 
 > 📌 Chọn đúng thư mục chứa file `manifest.json`, không chọn file .zip.
+
+| Chrome | Edge |
+|---|---|
+| <img src="docs/install/5-chrome-load-unpacked.png" alt="Chrome: Load unpacked"> | <img src="docs/install/5-edge-load-unpacked.png" alt="Edge: Load Unpacked"> |
+
+Cài xong, thẻ **AI Form Filler** hiện trong danh sách tiện ích, công tắc ở góc dưới thẻ đang bật. Nút ↻ trên thẻ dùng khi [cập nhật lên bản mới](#cập-nhật-lên-bản-mới).
+
+<p align="center"><img src="docs/install/5-chrome-installed.png" width="80%" alt="Thẻ AI Form Filler sau khi cài"></p>
 
 ### Bước 6 — Ghim tiện ích và nhập API key
 
@@ -68,7 +82,7 @@ chọn thư mục đã giải nén ở bước 2 rồi bấm **Select (Chọn)**
 > 📌 Key miễn phí cho 50 lượt/ngày với các model `:free` (nạp 10 credits thì lên 1000 lượt/ngày). Hết lượt
 > tiện ích vẫn điền được form bằng dữ liệu tạo sẵn trong máy.
 
-<p align="center"><img src="docs/settings.png" width="640" alt="Settings tab"></p>
+<p align="center"><img src="docs/install/6-bubble.png" width="49%" alt="Bấm bong bóng xanh ở góc dưới bên phải"> <img src="docs/install/6-settings.png" width="49%" alt="Settings: dán API key rồi bấm Test connection"></p>
 
 ### 🔑 Lấy OpenRouter API key (miễn phí)
 
