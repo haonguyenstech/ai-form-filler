@@ -6,6 +6,9 @@ It works on plain HTML inputs **and** modern component libraries: shadcn / Radix
 
 ![Manifest V3](https://img.shields.io/badge/Manifest-V3-blue) ![OpenRouter](https://img.shields.io/badge/AI-OpenRouter%20free-22c55e)
 
+<p align="center"><img src="docs/demo.gif" width="860" alt="Demo: mở bong bóng, nhập instruction, xem lại giá trị, Apply, rồi tạo lại một field bằng nút ✨"></p>
+<p align="center"><sub>🎬 <a href="docs/demo.mp4">Xem bản MP4 nét hơn</a> · quay bằng <code>test/record-demo.mjs</code></sub></p>
+
 **👉 [Hướng dẫn cài đặt](#-cài-đặt-cho-chrome--edge) · [⬇️ Tải bản mới nhất](https://github.com/haonguyenstech/ai-form-filler/releases/latest)**
 
 ---
