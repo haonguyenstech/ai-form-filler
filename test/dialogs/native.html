@@ -1,0 +1,20 @@
+<!doctype html><html><head><meta charset="utf-8"><title>native dialog</title></head><body>
+<h1>Native &lt;dialog&gt;</h1>
+<form id="bg"><label>Background name <input id="bgName" name="bgName"></label>
+<label>Background city <select id="bgCity"><option value="">Choose…</option><option>Hanoi</option><option>Hue</option></select></label></form>
+<button id="open" onclick="document.getElementById('dlg').showModal()">Open</button>
+<dialog id="dlg"><form method="dialog" id="f">
+  <h2>Sign up</h2>
+  <label>Full name <input name="fullName" required></label><br>
+  <label>Email <input type="email" name="email"></label><br>
+  <label>Birth date <input type="date" name="dob"></label><br>
+  <label>Plan <select name="plan"><option value="">-- Select --</option><option value="free">Free</option><option value="pro">Pro</option></select></label><br>
+  <fieldset><legend>Gender</legend>
+    <label><input type="radio" name="gender" value="m"> Male</label>
+    <label><input type="radio" name="gender" value="f"> Female</label></fieldset>
+  <label><input type="checkbox" name="tos"> I accept the terms</label><br>
+  <label>Bio <textarea name="bio"></textarea></label><br>
+  <button value="ok">Save</button>
+</form></dialog>
+<script>window.__isOpen = () => document.getElementById('dlg').open;</script>
+</body></html>

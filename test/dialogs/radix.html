@@ -1,0 +1,36 @@
+<!doctype html><html><head><meta charset="utf-8"><title>radix dialog</title><script type="importmap">{"imports":{"react":"https://esm.sh/react@18.3.1","react/jsx-runtime":"https://esm.sh/react@18.3.1/jsx-runtime","react-dom":"https://esm.sh/react-dom@18.3.1","react-dom/client":"https://esm.sh/react-dom@18.3.1/client","htm":"https://esm.sh/htm@3.1.1"}}</script>
+<style>[role=dialog]{position:fixed;top:10%;left:30%;background:#fff;border:1px solid #999;padding:16px;z-index:10}.ov{position:fixed;inset:0;background:#0006}[role=listbox]{background:#fff;border:1px solid #333}[role=option]{padding:4px}</style></head><body>
+<h1>Radix Dialog + Select</h1><div id="root"></div>
+<script type="module">
+import React from "react"; import { createRoot } from "react-dom/client"; import htm from "htm";
+import * as D from "https://esm.sh/@radix-ui/react-dialog@1.1.2?external=react,react-dom";
+import * as S from "https://esm.sh/@radix-ui/react-select@2.1.2?external=react,react-dom";
+const html = htm.bind(React.createElement);
+function Sel({ label, items }) {
+  return html`<div><span id=${"l"+label}>${label}</span>
+  <${S.Root}><${S.Trigger} aria-labelledby=${"l"+label} data-slot="select-trigger"><${S.Value} placeholder="Pick one" /><//>
+  <${S.Portal}><${S.Content} position="popper"><${S.Viewport}>${items.map((i) => html`<${S.Item} key=${i} value=${i}><${S.ItemText}>${i}<//><//>`)}<//><//><//><//></div>`;
+}
+function App() {
+  const [open, setOpen] = React.useState(false);
+  window.__isOpen = () => open;
+  return html`<div>
+    <form id="bg"><label>Background name <input id="bgName" /></label></form>
+    <${D.Root} open=${open} onOpenChange=${setOpen}>
+      <${D.Trigger} id="open">Open<//>
+      <${D.Portal}><${D.Overlay} className="ov" /><${D.Content}>
+        <${D.Title}>Edit profile<//><${D.Description}>Make changes<//>
+        <form>
+          <label>Name <input name="name" /></label><br/>
+          <label>Username <input name="username" /></label><br/>
+          <label>Email <input type="email" name="email" /></label><br/>
+          <${Sel} label="Role" items=${["Admin", "Editor", "Viewer"]} />
+          <${Sel} label="Team" items=${["Core", "Growth"]} />
+          <label><input type="checkbox" name="news" /> Newsletter</label>
+        </form>
+      <//><//>
+    <//></div>`;
+}
+createRoot(document.getElementById("root")).render(html`<${App} />`);
+window.__ready = true;
+</script></body></html>

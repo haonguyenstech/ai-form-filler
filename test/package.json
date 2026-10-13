@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "node run-all.mjs"
+    "test": "node run-all.mjs",
+    "icons": "node make-icons.mjs"
   },
   "keywords": [],
   "author": "",

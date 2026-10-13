@@ -1,0 +1,31 @@
+<!doctype html><html><head><meta charset="utf-8"><title>mui dialog</title><script type="importmap">{"imports":{"react":"https://esm.sh/react@18.3.1","react/jsx-runtime":"https://esm.sh/react@18.3.1/jsx-runtime","react-dom":"https://esm.sh/react-dom@18.3.1","react-dom/client":"https://esm.sh/react-dom@18.3.1/client","htm":"https://esm.sh/htm@3.1.1"}}</script></head><body>
+<h1>MUI Dialog</h1><div id="root"></div>
+<script type="module">
+import React from "react"; import { createRoot } from "react-dom/client"; import htm from "htm";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, Select, MenuItem, FormControl, InputLabel, Checkbox, FormControlLabel, RadioGroup, Radio } from "https://esm.sh/@mui/material@5.16.7?external=react,react-dom";
+const html = htm.bind(React.createElement);
+function App() {
+  const [open, setOpen] = React.useState(false);
+  const [age, setAge] = React.useState("");
+  window.__isOpen = () => open;
+  return html`<div>
+    <form id="bg"><${TextField} id="bgName" label="Background name" /></form>
+    <${Button} id="open" variant="contained" onClick=${() => setOpen(true)}>Open<//>
+    <${Dialog} open=${open} onClose=${(e, reason) => { window.__closeReason = reason + " target=" + (e?.target?.className || e?.target?.tagName) + " stack=" + new Error().stack.split("\n").slice(2,5).join("/"); setOpen(false); }}>
+      <${DialogTitle}>Subscribe<//>
+      <${DialogContent}>
+        <${TextField} margin="dense" id="name" label="Full name" fullWidth />
+        <${TextField} margin="dense" id="email" label="Email Address" type="email" fullWidth />
+        <${FormControl} fullWidth margin="dense"><${InputLabel} id="age-l">Age<//>
+          <${Select} labelId="age-l" id="age" value=${age} label="Age" onChange=${(e) => setAge(e.target.value)}>
+            <${MenuItem} value=${10}>Ten<//><${MenuItem} value=${20}>Twenty<//><${MenuItem} value=${30}>Thirty<//><//><//>
+        <${RadioGroup} name="plan"><${FormControlLabel} value="basic" control=${html`<${Radio} />`} label="Basic" /><${FormControlLabel} value="premium" control=${html`<${Radio} />`} label="Premium" /><//>
+        <${FormControlLabel} control=${html`<${Checkbox} />`} label="Remember me" />
+        <${TextField} margin="dense" id="note" label="Note" multiline rows=${2} fullWidth />
+      <//>
+      <${DialogActions}><${Button} onClick=${() => setOpen(false)}>Cancel<//><//>
+    <//></div>`;
+}
+createRoot(document.getElementById("root")).render(html`<${App} />`);
+window.__ready = true;
+</script></body></html>

@@ -1,0 +1,26 @@
+<!doctype html><html><head><meta charset="utf-8"><title>antd modal</title><script type="importmap">{"imports":{"react":"https://esm.sh/react@18.3.1","react/jsx-runtime":"https://esm.sh/react@18.3.1/jsx-runtime","react-dom":"https://esm.sh/react-dom@18.3.1","react-dom/client":"https://esm.sh/react-dom@18.3.1/client","htm":"https://esm.sh/htm@3.1.1"}}</script></head><body>
+<h1>Ant Design Modal</h1><div id="root"></div>
+<script type="module">
+import React from "react"; import { createRoot } from "react-dom/client"; import htm from "htm";
+import { Modal, Button, Form, Input, Select, DatePicker, Checkbox, Radio } from "https://esm.sh/antd@5.21.0?bundle&external=react,react-dom";
+const html = htm.bind(React.createElement);
+function App() {
+  const [open, setOpen] = React.useState(false);
+  window.__isOpen = () => open;
+  return html`<div>
+    <form id="bg"><label>Background name <input id="bgName" /></label></form>
+    <${Button} id="open" type="primary" onClick=${() => setOpen(true)}>Open<//>
+    <${Modal} title="Create user" open=${open} onCancel=${(e) => { window.__closeReason = (e?.type) + " key=" + e?.key + " target=" + (e?.target?.className || e?.target?.tagName); setOpen(false); }} onOk=${() => setOpen(false)}>
+      <${Form} layout="vertical">
+        <${Form.Item} label="Username" name="username"><${Input} /><//>
+        <${Form.Item} label="Email" name="email"><${Input} type="email" /><//>
+        <${Form.Item} label="Country" name="country"><${Select} placeholder="Select a country" options=${[{ value: "vn", label: "Vietnam" }, { value: "jp", label: "Japan" }]} /><//>
+        <${Form.Item} label="Start date" name="start"><${DatePicker} /><//>
+        <${Form.Item} label="Plan" name="plan"><${Radio.Group} options=${["Free", "Pro"]} /><//>
+        <${Form.Item} name="agree" valuePropName="checked"><${Checkbox}>I agree<//><//>
+      <//>
+    <//></div>`;
+}
+createRoot(document.getElementById("root")).render(html`<${App} />`);
+window.__ready = true;
+</script></body></html>

@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Form Filler — Privacy Policy</title>
+<style>
+  :root { color-scheme: light dark; --ink:#121317; --ink-2:#45474D; --ink-3:#74777F;
+          --surface:#fff; --line:rgba(18,19,23,.10); --tint:rgba(183,191,217,.10); --accent:#1A73E8; }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink:#F1F2F5; --ink-2:#B4B7BF; --ink-3:#8A8D96; --surface:#17181C;
+            --line:rgba(255,255,255,.12); --tint:rgba(183,191,217,.07); --accent:#8AB4F8; }
+  }
+  * { box-sizing:border-box }
+  body { margin:0; padding:56px 24px 96px; background:var(--surface); color:var(--ink);
+         font:400 16px/1.65 "Google Sans Flex","Google Sans",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+         letter-spacing:-.1px; }
+  main { max-width:720px; margin:0 auto }
+  h1 { font-size:34px; font-weight:500; letter-spacing:-.03em; margin:0 0 6px }
+  h2 { font-size:20px; font-weight:500; letter-spacing:-.02em; margin:44px 0 12px }
+  .sub { color:var(--ink-3); margin:0 0 8px }
+  p, li { color:var(--ink-2) }
+  a { color:var(--accent) }
+  table { border-collapse:collapse; width:100%; margin:16px 0; font-size:15px }
+  th, td { text-align:left; padding:11px 14px; border-bottom:1px solid var(--line); vertical-align:top }
+  th { font-weight:500; color:var(--ink) }
+  code { background:var(--tint); border-radius:6px; padding:2px 6px; font-size:14px;
+         font-family:ui-monospace,SFMono-Regular,Menlo,monospace }
+  .callout { background:var(--tint); border:1px solid var(--line); border-radius:16px; padding:18px 20px; margin:20px 0 }
+  .callout p:last-child { margin-bottom:0 }
+  .callout p:first-child { margin-top:0 }
+  footer { margin-top:56px; padding-top:20px; border-top:1px solid var(--line); color:var(--ink-3); font-size:14px }
+</style>
+</head>
+<body>
+<main>
+  <h1>Privacy Policy</h1>
+  <p class="sub">AI Form Filler — Chrome extension</p>
+  <p class="sub">Last updated: 6 August 2026</p>
+
+  <p>AI Form Filler generates plausible test data for the form on the page you are looking at. To do
+  that it asks an AI provider of your choosing to invent a value for each field. This page describes
+  exactly what is sent, what is not, and where it goes.</p>
+
+  <h2>What is transmitted</h2>
+  <p>For each field on the page, the extension sends a <strong>description</strong> of the field —
+  never the data already in it:</p>
+
+  <table>
+    <tr><th style="width:50%">Sent to the AI provider</th><th>Never sent</th></tr>
+    <tr>
+      <td>The field's <code>label</code>, <code>name</code> and <code>placeholder</code></td>
+      <td>Values already present in the fields</td>
+    </tr>
+    <tr>
+      <td>Its <code>type</code>, whether it is required, and its format rules
+          (<code>maxLength</code>, <code>minLength</code>, <code>pattern</code>, <code>min</code>/<code>max</code>/<code>step</code>)</td>
+      <td>The page's text, headings or other content</td>
+    </tr>
+    <tr>
+      <td>For a dropdown, the list of option labels</td>
+      <td>The page URL, your cookies, your browsing history</td>
+    </tr>
+    <tr>
+      <td>Any instruction you type into the extension</td>
+      <td>Anything from other tabs or other sites</td>
+    </tr>
+    <tr>
+      <td>A made-up person to fill as (name, email, address…) and the chosen data locale, generated
+          locally for each fill</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>If the page rejects a value: that value (one the model itself produced) and the page's
+          error message for that field, so the model can correct it</td>
+      <td><strong>Password and file inputs</strong> — these are not read, not filled, and not
+          included in the request at all</td>
+    </tr>
+  </table>
+
+  <p>The extension makes <strong>one network request per fill</strong> — two if the page rejects some
+  of the values and they are sent back for correction —, addressed to
+  OpenRouter. It contains no analytics, no telemetry, no crash reporting
+  and no server operated by this project. The word <code>fetch</code> appears twice in the entire
+  source, both times pointing at the OpenRouter endpoint.</p>
+
+  <h2>Where it goes</h2>
+  <p>Only to <strong>OpenRouter</strong> (<a href="https://openrouter.ai" rel="noopener">openrouter.ai</a>),
+  using the API key you enter in <strong>Settings</strong>, and on to the model provider you choose
+  there. OpenRouter and each model provider handle the request under their own privacy terms, which
+  this project does not control. Please read them.</p>
+
+  <div class="callout">
+    <p><strong>Two things you should know before using the free models.</strong></p>
+    <p><strong>1. Dropdown options come from the page.</strong> The model has to choose from the real
+    list, so if a <code>&lt;select&gt;</code> enumerates actual records — customers, patients,
+    account names — those option labels are part of the request. This is unavoidable given what the
+    feature does.</p>
+    <p><strong>2. Providers behind OpenRouter's <code>:free</code> models may log prompts and use them
+    to improve their models</strong>, and free models can be withdrawn at any time.</p>
+    <p>Taken together, treat the free models as <strong>public</strong>. They are suited to scratch,
+    demo and staging forms. Do not use them on pages containing personal, confidential, regulated or
+    otherwise sensitive data. For that, pick a paid model and confirm that provider's
+    data-retention terms meet your requirements.</p>
+  </div>
+
+  <h2>What is stored, and where</h2>
+  <p>Your settings (API key, chosen model, options) and any instructions you save live in
+  <code>chrome.storage</code> on your own machine, synced by Chrome if you have sync enabled. The
+  generated values are never recorded — not by the extension, and nowhere off your device. There is
+  no account, no sign-up and no identifier of any kind.</p>
+
+  <h2>What the permissions are for</h2>
+  <table>
+    <tr><th style="width:32%">Permission</th><th>Why it is needed</th></tr>
+    <tr><td><code>scripting</code></td>
+        <td>To read the form fields and write generated values into them. Some component libraries
+            only respond to events fired from the page's own context, so this runs in the main
+            world.</td></tr>
+    <tr><td><code>storage</code></td>
+        <td>To remember your provider, model and saved instructions between sessions.</td></tr>
+    <tr><td><code>host_permissions: &lt;all_urls&gt;</code></td>
+        <td>The extension is for filling whatever form you happen to be testing, which cannot be
+            known ahead of time. It reads a page only when you open its panel and press
+            <em>Analyze&nbsp;&amp;&nbsp;Fill</em>, or press the per-field ✨ button. It does nothing
+            on pages you never invoke it on.</td></tr>
+  </table>
+
+  <h2>Children</h2>
+  <p>This is a developer and QA tool. It is not directed at children and collects no data from
+  anyone.</p>
+
+  <h2>Changes</h2>
+  <p>If what the extension transmits ever changes, this page and the in-product
+  <strong>Settings → Privacy</strong> summary will be updated together, and the date at the top
+  will change.</p>
+
+  <h2>Contact</h2>
+  <p>Questions or concerns: open an issue on the project's repository, or contact the developer
+  listed on the extension's Chrome Web Store page.</p>
+
+  <footer>
+    The same summary is available inside the extension under <strong>Settings → Privacy</strong>,
+    so you can check it without leaving the page you are on.
+  </footer>
+</main>
+</body>
+</html>

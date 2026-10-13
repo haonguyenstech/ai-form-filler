@@ -1,0 +1,30 @@
+<!doctype html><html><head><meta charset="utf-8"><title>headless dialog</title><script type="importmap">{"imports":{"react":"https://esm.sh/react@18.3.1","react/jsx-runtime":"https://esm.sh/react@18.3.1/jsx-runtime","react-dom":"https://esm.sh/react-dom@18.3.1","react-dom/client":"https://esm.sh/react-dom@18.3.1/client","htm":"https://esm.sh/htm@3.1.1"}}</script>
+<style>.panel{position:fixed;top:10%;left:30%;background:#fff;border:1px solid #999;padding:16px}</style></head><body>
+<h1>Headless UI Dialog</h1><div id="root"></div>
+<script type="module">
+import React from "react"; import { createRoot } from "react-dom/client"; import htm from "htm";
+import { Dialog, DialogPanel, DialogTitle, Listbox, ListboxButton, ListboxOptions, ListboxOption, Field, Label, Input } from "https://esm.sh/@headlessui/react@2.1.8?external=react,react-dom";
+const html = htm.bind(React.createElement);
+const people = ["Durward Reynolds", "Kenton Towne", "Therese Wunsch"];
+function App() {
+  const [open, setOpen] = React.useState(false);
+  const [p, setP] = React.useState(null);
+  window.__isOpen = () => open;
+  return html`<div>
+    <form id="bg"><label>Background name <input id="bgName" /></label></form>
+    <button id="open" onClick=${() => setOpen(true)}>Open</button>
+    <${Dialog} open=${open} onClose=${() => setOpen(false)}>
+      <${DialogPanel} className="panel"><${DialogTitle}>Invite<//>
+        <form>
+          <${Field}><${Label}>Full name<//><${Input} name="full_name" /><//>
+          <${Field}><${Label}>Email<//><${Input} type="email" name="email" /><//>
+          <${Field}><${Label}>Assignee<//>
+            <${Listbox} value=${p} onChange=${setP}><${ListboxButton}>${p || "Select person"}<//>
+              <${ListboxOptions} anchor="bottom" style=${{ background: "#fff", border: "1px solid #333" }}>${people.map((x) => html`<${ListboxOption} key=${x} value=${x}>${x}<//>`)}<//><//><//>
+          <label><input type="checkbox" name="admin" /> Make admin</label>
+        </form>
+      <//><//></div>`;
+}
+createRoot(document.getElementById("root")).render(html`<${App} />`);
+window.__ready = true;
+</script></body></html>

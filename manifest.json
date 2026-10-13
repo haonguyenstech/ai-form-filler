@@ -1,12 +1,18 @@
 {
   "manifest_version": 3,
   "name": "AI Form Filler",
-  "version": "2.7.0",
-  "description": "Floating bubble that analyzes and auto-fills every form field on the page using a free AI model — no API key, no setup required.",
+  "version": "0.3.5",
+  "description": "Floating bubble that analyzes and auto-fills every form field on the page using free AI models on OpenRouter — bring your own free API key.",
   "permissions": ["scripting", "storage"],
   "host_permissions": ["<all_urls>"],
   "action": {
-    "default_title": "AI Form Filler — toggle bubble"
+    "default_title": "AI Form Filler — toggle bubble",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
   },
   "commands": {
     "toggle-dialog": {
@@ -24,8 +30,15 @@
       "run_at": "document_idle"
     }
   ],
+  "web_accessible_resources": [
+    {
+      "resources": ["fonts/*.woff2"],
+      "matches": ["<all_urls>"]
+    }
+  ],
   "icons": {
     "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
   }

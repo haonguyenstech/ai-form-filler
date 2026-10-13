@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="vi">
+<head><meta charset="utf-8"><title>Validation form</title>
+<style>body{font:15px system-ui;max-width:420px;margin:40px auto}label{display:block;margin-top:12px}input{width:100%;padding:6px}</style></head>
+<body>
+<form id="f" novalidate>
+  <label for="name">Họ và tên</label><input id="name" name="name" required>
+  <label for="email">Email</label><input id="email" type="email" name="email" required>
+  <label for="code">Mã nhân viên</label><input id="code" name="code" pattern="[A-Z]{3}-\d{4}" required>
+  <label for="age">Tuổi</label><input id="age" type="number" name="age" min="18" max="30">
+  <label for="ref">Mã giới thiệu</label><input id="ref" name="ref" aria-describedby="ref-err"><div id="ref-err" style="color:red"></div>
+  <button>Gửi</button>
+</form>
+<script>
+  // a form-library style validator: checks on blur, flags with aria-invalid and a message
+  const ref = document.getElementById("ref"), err = document.getElementById("ref-err");
+  ref.addEventListener("blur", () => {
+    const bad = !/^VN\d{3}$/.test(ref.value);
+    ref.setAttribute("aria-invalid", bad ? "true" : "false");
+    err.textContent = bad ? "Mã giới thiệu phải có dạng VN + 3 chữ số" : "";
+  });
+</script>
+</body>
+</html>

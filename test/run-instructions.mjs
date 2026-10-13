@@ -15,7 +15,7 @@ async function mount(syncData) {
   await page.addInitScript((data) => {
     window.__set = [];
     window.chrome = {
-      storage: {
+      storage: { onChanged: { addListener: () => {} },
         sync: { get: async () => data, set: (o) => window.__set.push(o) },
         local: { get: async () => ({}), set: () => {} },
       },

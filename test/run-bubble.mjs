@@ -13,11 +13,12 @@ page.on("pageerror", (e) => console.log("  [pageerror]", e.message));
 await page.addInitScript(() => {
   window.__localSets = [];
   window.chrome = {
-    storage: {
-      sync: { get: async () => ({}), set: () => {} },
+    storage: { onChanged: { addListener: () => {} },
+      sync: { get: async () => ({ apiKey: "sk-or-test" }), set: () => {} },
       local: { get: async () => ({}), set: (o) => window.__localSets.push(o) },
     },
     runtime: {
+      getURL: (p) => "data:application/octet-stream;base64,",
       onMessage: { addListener: () => {} },
       sendMessage: async (m) => {
         if (m.action === "runUndo") return { ok: true, restored: 2, skipped: 1 };
@@ -57,20 +58,38 @@ await page.waitForTimeout(100);
 const openDuringLoad = await isOpen();
 console.log("stays open during load (Esc + overlay click ignored):", openDuringLoad);
 
-// wait for completion
+// wait for completion — the dialog is still up, showing the count
 await page.waitForTimeout(1600);
 const openAfter = await isOpen();
 const statusTxt = await page.evaluate((sr) => eval(sr).querySelector("#status").textContent, sr);
-console.log("stays open after success:", openAfter, "| status:", statusTxt.trim());
+console.log("still open right after success:", openAfter, "| status:", statusTxt.trim());
 await page.screenshot({ path: "/tmp/bubble-done.png" });
 
-// undo button shows after fill, runs, then hides
+// ...then it dismisses itself, so the filled page is left unobstructed
+await page.waitForTimeout(1400);
+const autoClosed = !(await isOpen());
+console.log("auto-closes after the fill:", autoClosed);
+
+// reopening keeps Undo available — auto-close must not strand that affordance
+await page.evaluate((sr) => eval(sr).querySelector(".bubble").click(), sr);
+await page.waitForTimeout(300);
 const undoShown = await page.evaluate((sr) => !eval(sr).querySelector("#undoBtn").hidden, sr);
 await page.evaluate((sr) => eval(sr).querySelector("#undoBtn").click(), sr);
 await page.waitForTimeout(200);
 const undoStatus = await page.evaluate((sr) => eval(sr).querySelector("#status").textContent, sr);
 const undoHidAfter = await page.evaluate((sr) => eval(sr).querySelector("#undoBtn").hidden, sr);
 console.log("undo button shown:", undoShown, "| after undo status:", undoStatus.trim(), "| hidden after:", undoHidAfter);
+
+// a deliberate interaction during the grace window cancels the pending close,
+// so a user reaching for Undo never has the dialog vanish under the cursor
+await page.evaluate((sr) => { eval(sr).querySelector("#reviewToggle").checked = false; }, sr);
+await page.evaluate((sr) => eval(sr).querySelector("#fillBtn").click(), sr);
+await page.waitForTimeout(1700);                       // fill resolves (mock takes 1.5s)
+await page.evaluate((sr) => eval(sr).querySelector(".dialog").dispatchEvent(
+  new PointerEvent("pointerdown", { bubbles: true })), sr);
+await page.waitForTimeout(1400);                       // past when it would have closed
+const stayedForInteraction = await isOpen();
+console.log("interaction cancels auto-close:", stayedForInteraction);
 
 // per-site toggle hides the bubble + persists
 await page.evaluate((sr) => { const c = eval(sr).querySelector("#siteToggle"); c.checked = false; c.dispatchEvent(new Event("change")); }, sr);
@@ -79,7 +98,7 @@ const savedDisabled = await page.evaluate(() => window.__localSets.some((o) => "
 console.log("site toggle hides bubble:", bubbleHidden, "| persisted:", savedDisabled);
 
 const ok = loading && openDuringLoad && openAfter && /Filled 3 of 3/.test(statusTxt) &&
-  undoShown && /Reverted 2/.test(undoStatus) && undoHidAfter && bubbleHidden && savedDisabled;
+  autoClosed && stayedForInteraction && undoShown && /Reverted 2/.test(undoStatus) && undoHidAfter && bubbleHidden && savedDisabled;
 console.log("\nRESULT:", ok ? "✅ PASS" : "❌ FAIL");
 await browser.close();
 process.exit(ok ? 0 : 1);

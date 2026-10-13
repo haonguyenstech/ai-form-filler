@@ -12,8 +12,9 @@ page.on("pageerror", (e) => console.log("  [pageerror]", e.message));
 await page.addInitScript(() => {
   window.__applied = null;
   window.chrome = {
-    storage: { sync: { get: async () => ({}), set: () => {} }, local: { get: async () => ({}), set: () => {} } },
+    storage: { onChanged: { addListener: () => {} }, sync: { get: async () => ({ apiKey: "sk-or-test" }), set: () => {} }, local: { get: async () => ({}), set: () => {} } },
     runtime: {
+      getURL: (p) => "data:application/octet-stream;base64,",
       onMessage: { addListener: () => {} },
       sendMessage: async (m) => {
         if (m.action === "runPreview")
