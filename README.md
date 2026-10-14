@@ -1,21 +1,73 @@
-# 🤖 AI Form Filler
+<div align="center">
 
-A Chrome extension (Manifest V3) that analyzes **every form field on the current page** and fills them with realistic, coherent data using **free AI models on OpenRouter** — bring your own free API key, nothing to install on the backend.
+<img src="icons/icon128.png" width="112" alt="AI Form Filler icon" />
 
-It works on plain HTML inputs **and** modern component libraries: shadcn / Radix Selects, react-day-picker date pickers, comboboxes with async-loaded options, checkboxes, radios, and textareas.
+# AI Form Filler
 
-![Manifest V3](https://img.shields.io/badge/Manifest-V3-blue) ![OpenRouter](https://img.shields.io/badge/AI-OpenRouter%20free-22c55e)
+**Fill every form on the page with one click, with realistic data from free AI models.**
 
-<p align="center"><img src="docs/demo.gif" width="860" alt="Demo: mở bong bóng, nhập instruction, xem lại giá trị, Apply, rồi tạo lại một field bằng nút ✨"></p>
-<p align="center"><sub>🎬 <a href="docs/demo.mp4">Xem bản MP4 nét hơn</a> · quay bằng <code>test/record-demo.mjs</code></sub></p>
+A Chrome / Edge extension that reads every field on the current page and fills it with one coherent, believable person.
+Bring your own free OpenRouter key; there is no backend.
 
-**👉 [Hướng dẫn cài đặt](#-cài-đặt-cho-chrome--edge) · [⬇️ Tải bản mới nhất](https://github.com/haonguyenstech/ai-form-filler/releases/latest)**
+<p>
+  <img alt="Manifest V3" src="https://img.shields.io/badge/Manifest-V3-1A73E8?logo=googlechrome&logoColor=white" />
+  <img alt="Chrome · Edge" src="https://img.shields.io/badge/Chrome%20%C2%B7%20Edge-supported-0A84FF" />
+  <img alt="OpenRouter free" src="https://img.shields.io/badge/AI-OpenRouter%20free-22C55E" />
+  <img alt="Version" src="https://img.shields.io/github/v/release/haonguyenstech/ai-form-filler?color=6E7781" />
+  <img alt="MIT" src="https://img.shields.io/badge/license-MIT-6E7781" />
+</p>
+
+<a href="#features">Features</a> ·
+<a href="#-cài-đặt-cho-chrome--edge">Cài đặt</a> ·
+<a href="#-cách-dùng">Cách dùng</a> ·
+<a href="#how-it-works">How it works</a> ·
+<a href="#privacy">Privacy</a> ·
+<a href="#development">Development</a>
+
+<br /><br />
+
+<img src="docs/demo.gif" width="820" alt="Demo: mở bong bóng, nhập instruction, xem lại giá trị, Apply, rồi tạo lại một field bằng nút ✨" />
+
+<sub>🎬 <a href="docs/demo.mp4">Xem bản MP4 nét hơn</a> · quay bằng <code>test/record-demo.mjs</code></sub>
+
+<br /><br />
+
+<a href="https://github.com/haonguyenstech/ai-form-filler/releases/latest"><b>⬇️ Tải bản mới nhất (.zip)</b></a>
+
+</div>
+
+---
+
+## Features
+
+### ⚡ One click, the whole form
+A floating bubble scans the page, asks the AI and fills everything, then gets out of the way so you see the result. Turn on **Preview** to review and edit each value before it is applied.
+
+### 🧩 Works with real component libraries
+Plain HTML inputs **and** shadcn / Radix Selects, react-day-picker date pickers, comboboxes with async options, MUI, Ant Design, Mantine, Vuetify, Angular Material, checkboxes, radios, textareas, and forms inside modal dialogs. **26 of 26** test pages pass, see [Coverage](#coverage).
+
+### 🧑 One consistent person per fill
+| | |
+|---|---|
+| **Persona** | Every fill invents one person (name, email, phone, address, company, birth date), so the email matches the name and the phone/postcode match the country. |
+| **Locale** | *Settings → Fake data locale*: English, Vietnamese, Japanese, French, German, Spanish, or *Auto* from the page's `<html lang>`. |
+| **Instructions** | Type *"a 30-year-old engineer from Vietnam"*, save reusable ones, and mark one ⭐ default for new pages. |
+| **Per-field ✨** | A Grammarly-style button on the focused field regenerates just that value. |
+
+### ✅ Respects the page's validation
+`pattern`, `min`/`max`/`step` and `minLength` go to the model. After the fill the extension asks the page which values it rejected (native constraint validation, plus the `aria-invalid` + error text form libraries show) and sends only those back with the page's own error message. A field that still fails its `pattern` gets a value built from the pattern itself.
+
+### 🛟 Never stuck on a quota
+If the AI can't answer (the free model's daily cap, a busy model, no network, a garbled reply), the form is still filled from locally generated data for the same persona, and the status says why. Only a missing or invalid key, or a wrong model id, stops the fill.
+
+### 🧰 And the small things
+Undo the last fill, a per-site on/off switch, a draggable bubble, real labels instead of "field 3", tabs for *Fill · Instructions · Settings*, light and dark mode, shortcut <kbd>⌘</kbd>/<kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>F</kbd>.
 
 ---
 
 ## 🚀 Cài đặt cho Chrome / Edge
 
-**[⬇️ Tải bản mới nhất (file .zip)](https://github.com/haonguyenstech/ai-form-filler/releases/latest)** — tải file `.zip`, rồi làm theo 6 bước bên dưới. Mất khoảng 2 phút.
+**[⬇️ Tải bản mới nhất (file .zip)](https://github.com/haonguyenstech/ai-form-filler/releases/latest)**, rồi làm theo 6 bước bên dưới. Mất khoảng 2 phút.
 
 Tiện ích chạy trên **Google Chrome** và **Microsoft Edge** trên máy tính.
 
@@ -84,7 +136,9 @@ Cài xong, thẻ **AI Form Filler** hiện trong danh sách tiện ích, công t
 
 <p align="center"><img src="docs/install/6-bubble.png" width="49%" alt="Bấm bong bóng xanh ở góc dưới bên phải"> <img src="docs/install/6-settings.png" width="49%" alt="Settings: dán API key rồi bấm Test connection"></p>
 
-### 🔑 Lấy OpenRouter API key (miễn phí)
+<details>
+<summary><b>🔑 Lấy OpenRouter API key (miễn phí), có ảnh từng bước</b></summary>
+
 
 Tiện ích gọi AI qua [OpenRouter](https://openrouter.ai), một cổng kết nối tới nhiều model AI. Các model có đuôi `:free`
 dùng miễn phí, **không cần nhập thẻ**, chỉ cần một API key.
@@ -143,14 +197,11 @@ Hết lượt thì tiện ích vẫn điền form bằng dữ liệu tạo trong
 **Giữ key an toàn:** không dán key lên chat, Git hay tài liệu chung. Key nằm trong bộ nhớ của tiện ích trên máy bạn
 (`chrome.storage`, có đồng bộ nếu bạn bật Chrome Sync). Nghi bị lộ thì vào [openrouter.ai/settings/keys](https://openrouter.ai/settings/keys) xoá key và tạo key mới.
 
-### Xong — cách dùng
+</details>
 
-Mở trang có form → bấm bong bóng → **Analyze &amp; Fill Form**. Bật **Preview before filling** để xem và sửa từng giá trị trước khi điền.
-Phím tắt: `⌘ Shift F` (Mac) / `Ctrl Shift F` (Windows).
+<details>
+<summary><b>🔄 Cập nhật lên bản mới</b></summary>
 
-<p align="center"><img src="docs/fill.png" width="420" alt="Fill tab"> <img src="docs/review.png" width="420" alt="Review values"></p>
-
-### Cập nhật lên bản mới
 
 1. **Tải bản mới và giải nén** — tải file .zip mới ở trang [Releases](https://github.com/haonguyenstech/ai-form-filler/releases/latest) và giải nén.
 2. **Chép đè vào thư mục cũ** — chép toàn bộ nội dung thư mục mới đè lên thư mục đang cài (thư mục bạn đã chọn khi Load unpacked), đồng ý thay thế các file trùng tên.
@@ -158,32 +209,68 @@ Phím tắt: `⌘ Shift F` (Mac) / `Ctrl Shift F` (Windows).
 
 > ⚠️ Đừng bấm **Remove (Xoá)** tiện ích rồi cài lại: xoá tiện ích sẽ xoá luôn API key, instruction đã lưu và cài đặt của bạn.
 
-### Cho developer — chạy từ mã nguồn
+</details>
 
-```bash
-git clone https://github.com/haonguyenstech/ai-form-filler.git
-```
+---
 
-Rồi làm từ bước 3, ở bước 5 chọn thư mục vừa clone. `./build.sh` đóng gói ra `dist/ai-form-filler-<version>.zip` (file được đính kèm ở Releases).
+## 🧭 Cách dùng
 
-## ✨ Features
+### 1. Mở bong bóng
 
-- **One-click fill** — a floating bubble scans the page, asks the AI, and fills everything, then dismisses itself so you can see the result. An optional **Preview** step lets you review and edit each value before applying.
-- **Per-field ✨ icon** — a Grammarly-style button appears on the focused field; click it to generate just that one value.
-- **Saved instructions** — store reusable prompts (e.g. *"fill as a 30-year-old engineer from Vietnam"*) and mark one as the ⭐ default that pre-fills on new pages.
-- **Respects the page's validation** — `pattern`, `min`/`max`/`step` and `minLength` go to the model. After the fill the extension asks the page which values it rejected (native constraint validation, plus the `aria-invalid` + error text that form libraries show). Those fields go back to the model with the page's own error message, and a field that still fails its `pattern` gets a value built from the pattern itself. Undo still restores the original values.
-- **One consistent person per fill, in the right locale** — every fill invents one persona (name, email, phone, address, company, birth date). The model is told to use it, so the email matches the name and the phone/postcode formats match the country. *Settings → Fake data locale* picks English, Vietnamese, Japanese, French, German or Spanish. *Auto* follows the page's `<html lang>`.
-- **Never stuck on a quota** — if the AI can't answer (the free model's daily cap, a busy model, no network, a garbled reply), the form is still filled from locally generated data for the same persona, and the status says why. Only a missing or invalid key, or a wrong model id, still stops the fill.
-- **Robust label detection** — never shows "field 3"; climbs the DOM for the real `<label>` / `aria-label` / placeholder.
-- **Undo** the last fill, **per-site toggle**, **draggable bubble**, keyboard shortcut `⌘/Ctrl+Shift+F`.
-- **Tabbed UI** — *Fill · Instructions · Settings*.
+Trên trang có form, bấm **bong bóng xanh** ở góc dưới bên phải (hoặc biểu tượng tiện ích trên thanh công cụ, hoặc <kbd>⌘</kbd>/<kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>F</kbd>). Bong bóng kéo đi chỗ khác được nếu che mất nội dung.
 
-## 🔌 Model (Settings tab)
+<p align="center"><img src="docs/usage/1-bubble.png" width="80%" alt="Bước 1: bấm bong bóng xanh ở góc dưới bên phải"></p>
 
-The extension calls **OpenRouter** (`openrouter.ai/api/v1/chat/completions`) straight from the
-background service worker with your own API key — get a free one at
-[openrouter.ai/keys](https://openrouter.ai/keys) and paste it into **Settings**. The **Model**
-dropdown offers OpenRouter's free models; a fresh install starts on the first one:
+### 2. Mô tả người cần điền rồi bấm Analyze & Fill
+
+- **Bước 2:** gõ vài chữ mô tả "người" sẽ điền form, ví dụ *kỹ sư phần mềm 28 tuổi ở Đà Nẵng*. Bỏ trống cũng được, tiện ích tự nghĩ ra một người hợp lý.
+- **Bước 3:** bật **Preview before filling** nếu muốn xem lại giá trị trước khi điền.
+- **Bước 4:** bấm **Analyze &amp; Fill Form**. **Fill which fields** cho phép chỉ điền ô bắt buộc (có dấu *) hoặc chỉ ô không bắt buộc.
+
+<p align="center"><img src="docs/usage/2-fill.png" width="80%" alt="Tab Fill: ô instruction, công tắc Preview, nút Analyze & Fill"></p>
+
+### 3. Xem lại rồi Apply
+
+Khi bật Preview, tiện ích hiện danh sách giá trị AI đề xuất.
+
+- **Bước 5:** sửa thẳng vào ô nào chưa ưng, hoặc bấm ↻ cạnh ô để AI tạo lại riêng giá trị đó.
+- **Bước 6:** bấm **Apply**. Form được điền, hộp thoại tự đóng để bạn xem kết quả.
+
+<p align="center"><img src="docs/usage/3-review.png" width="70%" alt="Màn Review: danh sách giá trị, nút Apply"></p>
+
+> 📌 Trang báo lỗi giá trị nào (sai định dạng, quá ngắn…) thì tiện ích tự gửi lại đúng những ô đó kèm lời báo lỗi của trang, và sửa cho tới khi hợp lệ.
+
+### 4. Tạo lại một ô bằng nút ✨
+
+Bấm vào một ô bất kỳ, nút **✨** hiện ở mép phải ô. Bấm nó để AI viết lại riêng ô đó, các ô khác giữ nguyên.
+
+<p align="center"><img src="docs/usage/4-sparkle.png" width="80%" alt="Nút ✨ trên ô đang chọn"></p>
+
+> 📌 Không thích nút này thì bỏ chọn **Settings → Show the ✨ generate icon on each field**.
+
+### 5. Hoàn tác
+
+Điền nhầm form? Mở lại bong bóng, bấm **Undo last fill**. Mọi ô quay về giá trị trước khi điền.
+
+<p align="center"><img src="docs/usage/5-undo.png" width="80%" alt="Nút Undo last fill"></p>
+
+### 6. Lưu instruction hay dùng
+
+Tab **Instructions**:
+
+1. Viết instruction vào ô trên cùng rồi bấm **Save instruction**.
+2. Bấm ★ để đặt làm **mặc định**: trang mới mở ra sẽ có sẵn instruction này.
+3. Bấm vào một dòng để dùng ngay, tiện ích chuyển về tab Fill.
+
+<p align="center"><img src="docs/usage/6-instructions.png" width="80%" alt="Tab Instructions: lưu, đặt mặc định, dùng lại"></p>
+
+> 📌 Instruction đồng bộ qua Chrome Sync nếu bạn bật Sync, nên dùng được trên máy khác.
+
+---
+
+## Model
+
+The extension calls **OpenRouter** (`openrouter.ai/api/v1/chat/completions`) straight from the background service worker with your own API key. Paste a free key into **Settings** ([how to get one](#-cài-đặt-cho-chrome--edge)). The **Model** dropdown offers OpenRouter's free models; a fresh install starts on the first one:
 
 | Model | Notes |
 |---|---|
@@ -201,40 +288,29 @@ in flight and settles to *Connected* / *Failed*.
 > Earlier versions defaulted to a keyless OpenCode Zen provider. OpenCode has since restricted
 > its free tier to its own app, so that provider was removed in 0.3.5.
 
-## 🎨 Design
+---
 
-The UI follows the [antigravity.google](https://antigravity.google/) design language: near-black
-ink (`#121317`) for type, a cool blue-grey tint for every secondary surface, pill geometry and
-hairline borders. Google blue (`#1A73E8`) carries the primary action — bubble, fill button,
-per-field ✨ icon — so the dialog reads light rather than resting on a black slab; the other
-brand colours appear only in the success confetti. Dark mode inverts the same token set and
-flips the accent to `#8AB4F8`.
+## How it works
 
-The type is **Google Sans Flex** where the system has it, falling back to **Figtree** (SIL OFL),
-which ships in `fonts/` as two ~15 KB woff2 subsets — no network request, no page-CSP problem.
-`@font-face` can't live inside a shadow root, so the family is registered on the document under
-the private name `AIFF Sans` and referenced from the shadow CSS.
-
-## 🖼 Icon
-
-`icons/*.png` are generated, not hand-drawn — edit the SVG in `test/make-icons.mjs` and run:
-
-```bash
-cd test && npm run icons
+```mermaid
+flowchart LR
+    U[You<br/>bubble · ✨ · shortcut] --> I[inject.js<br/>content script, Shadow-DOM UI]
+    I -->|fill request| B[background.js<br/>service worker]
+    B -->|extract fields<br/>MAIN world| P[page-funcs.js]
+    P -->|field descriptions| B
+    B -->|fields + persona + instruction| O[(OpenRouter<br/>:free model)]
+    O -->|values| B
+    B -->|fill + check validation<br/>MAIN world| P
+    B -.->|AI unavailable| L[offline.js<br/>local data, same persona]
+    L -.-> P
 ```
 
-The mark is a four-point sparkle on the same accent blue the UI uses. The 16/32 px files
-are drawn from a **different** source shape than 48/128 (optical sizing): pointy arms and
-the companion sparkle read as craft at 128 px and as dirt at 16 px, so the toolbar sizes
-get a single, blunter, larger star.
+- `inject.js`: content script (top frame, `<all_urls>`). Renders the bubble and a Shadow-DOM dialog so the page's CSS can't leak in or out. Holds all UI, settings, the per-field icon and the review flow.
+- `background.js`: service worker. Calls the AI (avoids page CORS) and orchestrates **extract → AI → fill → celebrate**. The extract/fill steps run in the page's **MAIN world** via `chrome.scripting.executeScript`, because synthetic clicks from the isolated content-script world don't reliably drive Radix widgets; the same clicks from the MAIN world do.
+- `page-funcs.js`: self-contained functions injected into the page's MAIN world to scan fields, fill values (React-safe: native value setter + `input`/`change`/`blur` events) and run the success animation.
+- `offline.js`: the local fallback that fills the same persona when the AI can't answer.
 
-## 🧠 How it works
-
-- `inject.js` — content script (top frame, `<all_urls>`). Renders the bubble + a Shadow-DOM dialog so the page's CSS can't leak in or out. Holds all UI, settings, the per-field icon, and the review flow.
-- `background.js` — service worker. Calls the AI (avoids page CORS) and orchestrates **extract → AI → fill → celebrate**. The extract/fill steps run in the page's **MAIN world** via `chrome.scripting.executeScript`, because synthetic clicks from the isolated content-script world don't reliably drive Radix widgets — the same clicks from the MAIN world do.
-- `page-funcs.js` — self-contained functions injected into the page's MAIN world to scan fields, fill values (React-safe: native value setter + `input`/`change`/`blur` events), and run the success animation.
-
-## 🎯 Coverage
+### Coverage
 
 `test/survey.mjs` loads the real extension, drives its UI with real pointer input, and answers
 the AI call with values built from the request's own field list — no model in the loop, so the
@@ -271,17 +347,9 @@ MUI X date fields, which are contenteditable spans rather than inputs.
 Calendar widgets are reached either through their month/year `<select>`s or by stepping months,
 budgeted to 60 years, so ordinary birth dates work. Dates further back than that will not resolve.
 
-## 🧪 Tests
+---
 
-A Playwright suite runs against a real Radix + react-day-picker test page:
-
-```bash
-cd test
-npm install
-npm test
-```
-
-## 🔒 Privacy
+## Privacy
 
 The extension makes **one network request per fill** (a second one only when the page rejects values and they go back for correction), to OpenRouter. If that request fails, the form is filled from locally generated data with no further requests. There is
 no analytics, no telemetry and no server of this project's own — `fetch` appears twice in the whole
@@ -315,11 +383,86 @@ recorded anywhere.
 
 The same summary is available in-product under **Settings → Privacy**.
 
-## 📄 License
+---
 
-MIT
+## Development
 
-## 📦 Publishing
+### Run from source
+
+```bash
+git clone https://github.com/haonguyenstech/ai-form-filler.git
+```
+
+Then follow install steps 3–5 and pick the cloned folder in **Load unpacked**.
+
+### Tests
+
+A Playwright suite runs against a real Radix + react-day-picker test page:
+
+```bash
+cd test
+npm install
+npm test
+```
+
+### Docs media
+
+Everything under `docs/` is generated from the real extension on `test/forms/demo.html`, with a canned AI answer so it costs no quota and comes out the same every run:
+
+```bash
+cd test && python3 -m http.server 5199 &
+node record-demo.mjs    # docs/demo.mp4 + docs/demo.gif
+node usage-shots.mjs    # docs/usage/*.png, the annotated "Cách dùng" screenshots
+```
+
+### Project layout
+
+```
+manifest.json      MV3 manifest
+inject.js          content script: bubble, Shadow-DOM dialog, settings, ✨ icon, review
+background.js      service worker: OpenRouter call, extract → AI → fill → validate
+page-funcs.js      functions run in the page's MAIN world (scan, fill, celebrate)
+offline.js         local persona + data when the AI is unavailable
+fonts/             Figtree subsets (woff2)
+icons/             generated by test/make-icons.mjs
+store/             Chrome Web Store listing + privacy policy
+test/              Playwright suite, survey, demo + screenshot recorders
+```
+
+<details>
+<summary><b>🎨 Design</b></summary>
+
+The UI follows the [antigravity.google](https://antigravity.google/) design language: near-black
+ink (`#121317`) for type, a cool blue-grey tint for every secondary surface, pill geometry and
+hairline borders. Google blue (`#1A73E8`) carries the primary action — bubble, fill button,
+per-field ✨ icon — so the dialog reads light rather than resting on a black slab; the other
+brand colours appear only in the success confetti. Dark mode inverts the same token set and
+flips the accent to `#8AB4F8`.
+
+The type is **Google Sans Flex** where the system has it, falling back to **Figtree** (SIL OFL),
+which ships in `fonts/` as two ~15 KB woff2 subsets — no network request, no page-CSP problem.
+`@font-face` can't live inside a shadow root, so the family is registered on the document under
+the private name `AIFF Sans` and referenced from the shadow CSS.
+
+</details>
+
+<details>
+<summary><b>🖼 Icon</b></summary>
+
+`icons/*.png` are generated, not hand-drawn — edit the SVG in `test/make-icons.mjs` and run:
+
+```bash
+cd test && npm run icons
+```
+
+The mark is a four-point sparkle on the same accent blue the UI uses. The 16/32 px files
+are drawn from a **different** source shape than 48/128 (optical sizing): pointy arms and
+the companion sparkle read as craft at 128 px and as dirt at 16 px, so the toolbar sizes
+get a single, blunter, larger star.
+
+</details>
+
+### Publishing
 
 `./build.sh` produces `dist/ai-form-filler-<version>.zip` containing only what the manifest
 references — the test suite and icon generator are left out. `store/LISTING.md` holds the
@@ -327,3 +470,13 @@ description, permission justifications and data-usage answers the Chrome Web Sto
 `store/privacy-policy.html` is the policy page (a public URL for it is mandatory).
 
 Bump `version` in `manifest.json` before every upload; the store refuses a version it has seen.
+
+---
+
+## Credits
+
+- [Figtree](https://github.com/erikdkennedy/figtree) by Erik Kennedy, the UI font (SIL OFL)
+- [OpenRouter](https://openrouter.ai), the model gateway
+- Design language after [antigravity.google](https://antigravity.google/)
+
+<div align="center"><sub>MIT License</sub></div>
